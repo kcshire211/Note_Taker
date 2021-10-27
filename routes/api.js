@@ -1,28 +1,42 @@
 const router = require("express").Router();
-const notes = require("../db/index");
-const { route } = require("./html");
+const fs = require("fs");
+const util = require("util");
+const uuidv1 = require("uuid/v1");
+
+const readAsync = util.promisify(fs.readFile);
+const writeAsync = util.promisify(fs.writeFile);
 
 router.get("/notes", (req, res) => {
-    notes
-      .readNotes()
+   readAsync("db/db.json", "utf-8")
       .then((data) => {
-        return res.json(data);
+        res.json(JSON.parse(data));
       })
       .catch((err) => res.status(500).json(err));
   });
 
   router.post("/notes", (req, res) => {
-    notes
-      .addNote(req.body)
-      .then((note) => res.json(note))
+    readAsync("db/db.json", "utf-8")
+      .then((data) => {
+        const newNote = {
+          title: req.body.title,
+          text: req.body.text,
+          id: uuidv1()
+        }
+       const parsedData = JSON.parse(data)
+        parsedData.push(newNote)
+        return writeAsync("db/db.json", JSON.stringify(parsedData));
+      })
+      .then(() => {
+        res.json({ok: true})
+      })
       .catch((err) => res.status(500).json(err));
   });
   
-  router.delete("/notes/:id", (req, res) => {
-    notes
-      .deleteNote(req.params.id)
-      .then(() => res.json({ ok: true }))
-      .catch((err) => res.status(500).json(err));
-  });
+  //router.delete("/notes/:id", (req, res) => {
+  //   notes
+  //     .deleteNote(req.params.id)
+  //     .then(() => res.json({ ok: true }))
+  //     .catch((err) => res.status(500).json(err));
+  // });
   
   module.exports = router;
