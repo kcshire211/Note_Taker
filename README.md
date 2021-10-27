@@ -1,5 +1,5 @@
 # Note_Taker
-  
+  https://kcshire211.github.io/Note_Taker/
 ## Table of Contents
 * [Description](#description)
 * [Installation](#installation)
@@ -24,3 +24,6 @@ Tested using local server for Get and Post and Delete requests <br>
 ## Questions?
 https://github.com/kcshire211/repo.git <br>
 Reach me by email at: <br> korey.cheshire@gmail.com
+![image](https://user-images.githubusercontent.com/85852768/138985880-67b72418-0573-49ee-b172-9305e68a1433.png)
+![image](https://user-images.githubusercontent.com/85852768/138985912-522ead46-7eb9-4914-8b81-2ac44b351f9c.png)
+![image](https://user-images.githubusercontent.com/85852768/138986020-b3e24cd7-c9ca-471f-99a8-678ab0cacb3d.png)
