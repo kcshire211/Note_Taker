@@ -32,11 +32,22 @@ router.get("/notes", (req, res) => {
       .catch((err) => res.status(500).json(err));
   });
   
-  //router.delete("/notes/:id", (req, res) => {
-  //   notes
-  //     .deleteNote(req.params.id)
-  //     .then(() => res.json({ ok: true }))
-  //     .catch((err) => res.status(500).json(err));
-  // });
+  router.delete("/notes/:id", (req, res) => {
+    readAsync("db/db.json", "utf-8")
+      .then((data) => {
+        const parsedData = JSON.parse(data)
+        const deleteNotes = []
+        for(let i= 0; i< parsedData.length; i++) {
+          if(parsedData[i].id !== req.params.id) {
+            deleteNotes.push(parsedData[i]) 
+          } 
+        } 
+        return writeAsync("db/db.json", JSON.stringify(deleteNotes));
+      })
+      .then(() => {
+        res.json({ok: true})
+      })
+      .catch((err) => res.status(500).json(err));
+  });
   
   module.exports = router;
